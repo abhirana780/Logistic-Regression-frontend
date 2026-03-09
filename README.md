@@ -15,7 +15,7 @@ An interactive, high-fidelity AI laboratory designed for MBA students and busine
 
 ## 🚀 Getting Started
 
-1. Ensure the backend is running on `http://localhost:5000`.
+1. Ensure the live backend is accessible at `https://logistic-regression-backend.onrender.com`.
 2. Open `index.html` in any modern browser.
 3. Pulse through the steps to see the AI in action!
 
