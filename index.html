@@ -1,0 +1,464 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI Strategy Suite | Logistic Regression for Business</title>
+    <meta
+      name="description"
+      content="An interactive AI simulator designed for MBA students to master Logistic Regression through real-world business datasets like HR Churn and Loan Defaults."
+    />
+    <meta
+      name="keywords"
+      content="Logistic Regression, AI for Business, MBA AI Tool, Risk Prediction, Machine Learning Simulator"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <div class="app-container">
+      <!-- Sidebar -->
+      <aside class="sidebar">
+        <div class="logo">
+          <h2>Strategy AI Hub</h2>
+          <p>Decision Intelligence Masterclass</p>
+        </div>
+
+        <nav id="main-nav">
+          <button class="nav-btn active" onclick="switchPage('page-1', this)">
+            <span class="icon">📊</span> Workforce Data
+          </button>
+          <button class="nav-btn" onclick="switchPage('page-2', this)">
+            <span class="icon">⚙️</span> Model Training
+          </button>
+          <button class="nav-btn" onclick="switchPage('page-3', this)">
+            <span class="icon">📈</span> Analytics & ROI
+          </button>
+          <button class="nav-btn" onclick="switchPage('page-4', this)">
+            <span class="icon">🪄</span> Risk Predictor
+          </button>
+        </nav>
+
+        <div class="dataset-selector">
+          <label>Business Context</label>
+          <select id="master-ds-select" onchange="changeDomain()">
+            <option value="hr_churn">🏦 HR: Employee Churn</option>
+            <option value="marketing_spam">📧 Marketing: Lead Quality</option>
+            <option value="finance_loan">💰 Finance: Default Risk</option>
+          </select>
+        </div>
+      </aside>
+
+      <!-- Main Engine -->
+      <main class="content-area">
+        <!-- STEP 1 -->
+        <section id="page-1" class="page animate-page active">
+          <div class="step-indicator">Step 1 of 4</div>
+          <header class="page-header">
+            <h1 id="ds-title">Workforce Analysis Dashboard</h1>
+            <p id="ds-desc">
+              Analyze historical business patterns to identify training features
+              for your AI.
+            </p>
+          </header>
+
+          <div class="mba-explanation">
+            <h4>👨‍💼 Business Core: Data Sourcing</h4>
+            <p>
+              Strategy starts with high-quality data. Look for clusters—patterns
+              where certain features clearly lead to a specific outcome. Your AI
+              will use these rows to build its classification map.
+            </p>
+          </div>
+
+          <div class="card table-card">
+            <div class="flex-between p-4">
+              <h3>Raw Operational Data</h3>
+              <button
+                class="btn btn-primary"
+                style="padding: 12px 24px"
+                onclick="loadDataset()"
+              >
+                Sync Data Engine
+              </button>
+            </div>
+            <div class="table-responsive hidden" id="dataset-container">
+              <table class="data-table">
+                <thead id="dataset-head"></thead>
+                <tbody id="dataset-body"></tbody>
+              </table>
+            </div>
+            <div id="ds-status-empty" class="p-5 text-center text-gray-600">
+              <p>
+                The data vault is currently locked. Click Sync to retrieve
+                business records.
+              </p>
+            </div>
+          </div>
+
+          <div class="nav-footer">
+            <button class="btn btn-primary" onclick="goToStep(2)">
+              Next Step: Configure Model ➜
+            </button>
+          </div>
+        </section>
+
+        <!-- STEP 2 -->
+        <section id="page-2" class="page animate-page hidden">
+          <div class="step-indicator">Step 2 of 4</div>
+          <header class="page-header">
+            <h1>Model Configuration</h1>
+            <p>
+              Define the variables (Levers) that will drive your AI's
+              decision-making process.
+            </p>
+          </header>
+
+          <div class="grid-2">
+            <div class="card">
+              <h3>Input Selection Matrix</h3>
+              <p class="text-sm text-gray-700 mb-4">
+                Choose which business metrics are the strongest predictors. The
+                AI will calculate the "Importance Score" for each.
+              </p>
+              <div id="feature-cb-container" class="feature-grid">
+                <!-- Checkboxes go here -->
+              </div>
+              <button
+                class="btn btn-primary w-100 mt-4"
+                id="train-btn"
+                onclick="trainModel()"
+              >
+                Execute Regression AI
+              </button>
+              <div
+                id="train-status"
+                class="status-msg text-success hidden mt-3 bold text-center"
+              >
+                ✨ Strategy Model Ready!
+              </div>
+            </div>
+
+            <div
+              class="card"
+              style="background: var(--secondary); color: white"
+            >
+              <h3>What's happening?</h3>
+              <div
+                class="mba-explanation"
+                style="
+                  background: rgba(255, 255, 255, 0.08);
+                  border-left-color: var(--accent);
+                  color: white;
+                "
+              >
+                <p>
+                  You are selecting <strong>Independent Variables</strong>. The
+                  AI uses these to find a mathematical boundary (Decision
+                  Boundary) that separates "Success" from "Failure".
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="nav-footer">
+            <button class="btn btn-accent" onclick="goToStep(1)">⬅ Back</button>
+            <button class="btn btn-primary" onclick="goToStep(3)">
+              Next Step: Analyze ROI ➜
+            </button>
+          </div>
+        </section>
+
+        <!-- STEP 3 -->
+        <section id="page-3" class="page animate-page hidden">
+          <div class="step-indicator">Step 3 of 4</div>
+          <header class="page-header">
+            <h1>Strategic Analytics Dashboard</h1>
+            <p>
+              Validate the mathematical accuracy and financial impact of your AI
+              model.
+            </p>
+          </header>
+
+          <div class="overlay-msg" id="eval-overlay">
+            <h3>Awaiting Model Data</h3>
+            <p>
+              Go to Model Training (Step 2) to build your predictive strategy.
+            </p>
+            <button class="btn btn-primary mt-3" onclick="goToStep(2)">
+              Go to Step 2
+            </button>
+          </div>
+
+          <div class="eval-content hidden" id="eval-content">
+            <div class="card mb-4">
+              <div class="flex-between mb-3">
+                <h3>
+                  Risk Sensitivity Threshold:
+                  <span id="threshold-val" class="text-accent">0.50</span>
+                </h3>
+              </div>
+              <input
+                type="range"
+                id="threshold-slider"
+                min="0.1"
+                max="0.9"
+                step="0.05"
+                value="0.5"
+                oninput="updateMetrics()"
+              />
+              <p class="text-xs mt-3 text-gray-600 italic">
+                Strategic Balancing: Lowering the threshold catches more risks
+                (Recall) but increases false alarms. Adjust this based on your
+                budget.
+              </p>
+            </div>
+
+            <div class="dashboard-grid mb-4">
+              <div class="card metric-card span-2">
+                <div class="flex-between">
+                  <span class="label">Classification Accuracy</span>
+                  <span
+                    id="model-health-tag"
+                    class="text-xs bold"
+                    style="text-transform: uppercase"
+                    >Awaiting Model...</span
+                  >
+                </div>
+                <div class="value" id="metric-acc">--%</div>
+              </div>
+              <div class="card metric-card span-2">
+                <span class="label">Strategic Sensitivity</span>
+                <div class="value text-accent" id="metric-rec">--%</div>
+              </div>
+            </div>
+
+            <div class="grid-2">
+              <div class="card roi-card bg-dark text-white">
+                <div class="flex-between">
+                  <h3>Business Value Projection</h3>
+                  <span class="status-badge" style="background: var(--success)"
+                    >Net Profitability</span
+                  >
+                </div>
+                <div class="savings-value text-success" id="total-savings">
+                  $0
+                </div>
+
+                <div class="grid-2 mt-4">
+                  <div class="form-group text-left">
+                    <label class="text-xs bold opacity-70" id="lbl-saving-p"
+                      >Cost/Loss</label
+                    >
+                    <input
+                      type="number"
+                      id="cost-churn"
+                      class="form-control"
+                      style="
+                        background: rgba(255, 255, 255, 0.1);
+                        border: none;
+                        color: white;
+                        padding: 10px;
+                        border-radius: 8px;
+                        width: 100%;
+                      "
+                      value="12000"
+                      onchange="updateROI()"
+                    />
+                  </div>
+                  <div class="form-group text-left">
+                    <label class="text-xs bold opacity-70" id="lbl-saving-s"
+                      >Incentive/Cost</label
+                    >
+                    <input
+                      type="number"
+                      id="cost-save"
+                      class="form-control"
+                      style="
+                        background: rgba(255, 255, 255, 0.1);
+                        border: none;
+                        color: white;
+                        padding: 10px;
+                        border-radius: 8px;
+                        width: 100%;
+                      "
+                      value="1500"
+                      onchange="updateROI()"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div class="card">
+                <h3>Variable Influence Weight</h3>
+                <div class="chart-container-sm">
+                  <canvas id="importanceChart"></canvas>
+                </div>
+              </div>
+            </div>
+
+            <div class="grid-2">
+              <div
+                class="card"
+                style="background: var(--primary); color: white"
+              >
+                <h3>The Model Equation Decoder</h3>
+                <div id="equation-box" class="equation-container">
+                  <p class="italic text-sm mb-3">
+                    Your AI has built this mathematical rule:
+                  </p>
+                  <div id="dynamic-formula" class="formula-display">
+                    P(Outcome) = 1 / (1 + e^-(intercept + ...))
+                  </div>
+                  <p class="mt-4 text-xs opacity-80">
+                    This S-shaped curve (Sigmoid) forces any business input to
+                    result in a probability between 0% and 100%.
+                  </p>
+                </div>
+              </div>
+
+              <div class="card text-left">
+                <h3>Strategic Boundary Analysis</h3>
+                <p class="text-sm text-gray-700 mb-4">
+                  Separation of historical cohorts. The background Represents
+                  the Decision Zone.
+                </p>
+                <div class="chart-container-sm">
+                  <canvas id="evalChart"></canvas>
+                </div>
+              </div>
+            </div>
+
+            <div class="nav-footer mt-5 p-5 bg-gray-100 rounded-24">
+              <div class="text-left">
+                <h4 class="bold mb-1">Step 3 Complete?</h4>
+                <p class="text-sm text-gray-600">
+                  The AI model is fully validated. You are now ready to run
+                  what-if scenarios.
+                </p>
+              </div>
+              <div class="flex-gap">
+                <button class="btn btn-accent" onclick="goToStep(2)">
+                  ⬅ Previous Phase
+                </button>
+                <button
+                  class="btn btn-primary"
+                  style="padding: 18px 45px; font-size: 1.1rem"
+                  onclick="goToStep(4)"
+                >
+                  Proceed to Risk Simulator ➜
+                </button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- STEP 4 -->
+        <section id="page-4" class="page animate-page hidden">
+          <div class="step-indicator">Step 4 of 4</div>
+          <header class="page-header">
+            <h1>Strategic Risk Simulator</h1>
+            <p>
+              Simulate individual business scenarios using your trained AI
+              model.
+            </p>
+          </header>
+
+          <div class="overlay-msg" id="pred-overlay">
+            <h3>Waiting for Strategy Model</h3>
+            <p>You must train the AI in Step 2 before testing scenarios.</p>
+            <button class="btn btn-primary mt-3" onclick="goToStep(2)">
+              Go to Step 2
+            </button>
+          </div>
+
+          <div class="predict-content hidden" id="predict-content">
+            <div class="simulator-layout">
+              <div class="card">
+                <h3>Scenario Parameters</h3>
+                <div id="dynamic-sliders">
+                  <!-- Sliders go here -->
+                </div>
+              </div>
+
+              <div class="probability-result">
+                <div class="card" style="padding-bottom: 50px">
+                  <span class="text-xs bold text-gray-600 mb-4 d-block"
+                    >PROBABILITY INDEX</span
+                  >
+                  <div class="prob-circle">
+                    <div class="prob-fill" id="risk-fill"></div>
+                  </div>
+                  <div class="prob-text" id="out-prob">0%</div>
+                  <div
+                    id="out-class"
+                    class="status-badge mt-3"
+                    style="width: 100%; border-radius: 12px; padding: 15px"
+                  >
+                    WAITING...
+                  </div>
+                </div>
+
+                <div class="card text-left mt-4">
+                  <h4 class="bold mb-2">Strategic Risk Breakdown</h4>
+                  <div id="contribution-list" class="contribution-container">
+                    <!-- Contributions will go here -->
+                  </div>
+                </div>
+
+                <div
+                  class="card text-left mt-4"
+                  style="
+                    border: 2px solid var(--primary);
+                    background: var(--primary-light);
+                  "
+                >
+                  <div class="flex-between">
+                    <h4 class="bold">Strategic Verdict</h4>
+                    <button
+                      class="btn btn-primary text-xs"
+                      style="padding: 5px 12px; font-size: 0.65rem"
+                      onclick="copyStrategicReport()"
+                    >
+                      ⎘ Copy Insight
+                    </button>
+                  </div>
+                  <p
+                    id="final-conclusion"
+                    class="mt-2 text-sm text-secondary"
+                    style="font-weight: 600"
+                  >
+                    Awaiting scenario analysis...
+                  </p>
+                  <div class="mt-4 p-3 bg-white rounded-12 border-1">
+                    <span class="text-xs bold opacity-70"
+                      >RECOMMENDED ACTION</span
+                    >
+                    <p id="action-plan" class="text-sm bold text-success">
+                      Stand by for AI recommendation.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="nav-footer">
+              <button class="btn btn-accent" onclick="goToStep(3)">
+                ⬅ Back to Analytics
+              </button>
+              <button class="btn btn-primary" onclick="location.reload()">
+                Reset Entire Application
+              </button>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script src="js/app.js"></script>
+  </body>
+</html>
