@@ -1,4 +1,4 @@
-const API_BASE = "http://localhost:5000";
+const API_BASE = "https://logistic-regression-backend.onrender.com";
 let plotChart = null, importanceChart = null;
 let lastTrainData = null;
 let domainConfigs = {};
